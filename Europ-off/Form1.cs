@@ -13,7 +13,7 @@ namespace Europ_off
 {
     public partial class Form1 : Form
     {
-        List<Province> provinceList = new List<Province>( );
+        List<Province> provinceList;
         List<Coordinate> coordHolder = new List<Coordinate>( );
         FileReader saveReader;
         Pen pen = new Pen( Color.Black );      
@@ -27,22 +27,25 @@ namespace Europ_off
         {
             Graphics g = e.Graphics;
             DrawProvinces( g );
-        }        
+        }
 
         private void DrawProvinces( Graphics g )
         {
-            int j = 1;
-            foreach(Province element in provinceList)
+            if(provinceList != null)
             {
-                coordHolder = element.GetCoordinates();
-                for(int i = 0; i <= coordHolder.Count; i++)
+                int j = 1;
+                foreach (Province element in provinceList)
                 {
-                    if(i == coordHolder.Count)
+                    coordHolder = element.GetCoordinates();
+                    for (int i = 0; i <= coordHolder.Count; i++)
                     {
-                        j = 0;
-                    }
+                        if (i == coordHolder.Count)
+                        {
+                            j = 0;
+                        }
 
-                    paintLine( coordHolder[i], coordHolder[i + j] , g);
+                        paintLine(coordHolder[i], coordHolder[i + j], g);
+                    }
                 }
             }
         }
@@ -68,6 +71,8 @@ namespace Europ_off
             if(openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 saveReader = new FileReader(openFileDialog1.FileName);
+                provinceList = saveReader.Proviences;
+                GamePanel.Invalidate();
             }
         }
     }

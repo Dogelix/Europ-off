@@ -10,13 +10,24 @@ namespace Europ_off
     class FileReader
     { 
         StreamReader _save;
+        List<Province> _proviences;
 
         public FileReader(String save)
         {
             _save = new StreamReader(save);
+            List<Province> _proviences = ReadProvinceCodes();
+            _save.Close();
         }
 
-        public List<Province> GetProvinceCodes( )
+        public List<Province> Proviences
+        {
+            get
+            {
+                return _proviences;
+            }
+        }
+
+        private List<Province> ReadProvinceCodes( )
         {
             List<Province> _list = new List<Province>();
             uint numberOfProviences = uint.Parse(_save.ReadLine());
@@ -35,14 +46,11 @@ namespace Europ_off
             uint _production = 0;
             List<Coordinate> _coordinates = new List<Coordinate>();
 
-            for (int i = 0; i <= 5; i++)
-            {
-                _id = uint.Parse(_save.ReadLine().Remove(0, 4));
-                _tax = uint.Parse(_save.ReadLine().Remove(0, 5));
-                _manpower = uint.Parse(_save.ReadLine().Remove(0, 5));
-                _production = uint.Parse(_save.ReadLine().Remove(0, 5));
-                _coordinates = ParseCoordinates((_save.ReadLine().Remove(0, 5)));
-            }
+            _id = uint.Parse(_save.ReadLine().Remove(0, 4));
+            _tax = uint.Parse(_save.ReadLine().Remove(0, 5));
+            _manpower = uint.Parse(_save.ReadLine().Remove(0, 5));
+            _production = uint.Parse(_save.ReadLine().Remove(0, 5));
+            _coordinates = ParseCoordinates((_save.ReadLine().Remove(0, 5)));
 
             Province _provience = new Province(_coordinates,_id, _tax, _production, _manpower);
             return _provience;
@@ -52,7 +60,7 @@ namespace Europ_off
             List<Coordinate> x = new List<Coordinate>();
 
             //Splits the input line and parses each cooridnate
-            string[] coordinates = t.Split( ',' );
+            string[] coordinates = t.Split( '-' );
             foreach(string coordinate in coordinates)
             {
                 x.Add(ParseCoordinate(coordinate));
@@ -64,8 +72,10 @@ namespace Europ_off
         private Coordinate ParseCoordinate(string line)
         {
             Coordinate c = new Coordinate( );
-            c.x = uint.Parse( line.Split( ',' )[0].Substring(1));
-            c.y = uint.Parse( line.Split( ',' )[1].Substring( 0, line.Length - 1));
+            string[] parameters = line.Substring(1, line.Length - 2).Split(',');
+
+            c.x = uint.Parse( parameters[0]);
+            c.y = uint.Parse( parameters[1]);
             return c;
         }
     }
