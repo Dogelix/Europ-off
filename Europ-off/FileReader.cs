@@ -15,7 +15,7 @@ namespace Europ_off
         public FileReader(String save)
         {
             _save = new StreamReader(save);
-            List<Province> _proviences = ReadProvinceCodes();
+            _proviences = ReadProvinceCodes();
             _save.Close();
         }
 

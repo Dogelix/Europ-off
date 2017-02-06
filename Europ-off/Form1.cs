@@ -14,7 +14,7 @@ namespace Europ_off
     public partial class Form1 : Form
     {
         List<Province> provinceList;
-        List<Coordinate> coordHolder = new List<Coordinate>( );
+        List<Coordinate> coordinates;
         FileReader saveReader;
         Pen pen = new Pen( Color.Black );      
 
@@ -33,19 +33,15 @@ namespace Europ_off
         {
             if(provinceList != null)
             {
-                int j = 1;
-                foreach (Province element in provinceList)
+                foreach (Province provience in provinceList)
                 {
-                    coordHolder = element.GetCoordinates();
-                    for (int i = 0; i <= coordHolder.Count; i++)
+                    coordinates = provience.GetCoordinates();
+                    for(int i = 0; i + 1 < coordinates.Count; i++)
                     {
-                        if (i == coordHolder.Count)
-                        {
-                            j = 0;
-                        }
-
-                        paintLine(coordHolder[i], coordHolder[i + j], g);
+                        paintLine(coordinates[i], coordinates[i + 1], g);
                     }
+                    //Draws the final connecting line
+                    paintLine(coordinates.First(), coordinates.Last(), g);
                 }
             }
         }
