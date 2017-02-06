@@ -9,7 +9,7 @@ namespace Europ_off
 {
     class FileReader
     { 
-        StreamReader file = new StreamReader( "C:\\Users\\Jake Yeatman\\Desktop\\Europ-off\\Europ-off\\Europ-off\\ProvinceCodes.txt" );
+        StreamReader file = new StreamReader( "..\\bin\\ProvinceCodes.txt");
         List<Province> provList = new List<Province>( );
 
         string line;

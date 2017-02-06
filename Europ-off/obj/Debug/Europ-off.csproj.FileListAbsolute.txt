@@ -7,3 +7,12 @@ C:\Users\Jake Yeatman\Desktop\Europ-off\Europ-off\Europ-off\obj\Debug\Europ_off.
 C:\Users\Jake Yeatman\Desktop\Europ-off\Europ-off\Europ-off\obj\Debug\Europ-off.csproj.GenerateResource.Cache
 C:\Users\Jake Yeatman\Desktop\Europ-off\Europ-off\Europ-off\obj\Debug\Europ-off.exe
 C:\Users\Jake Yeatman\Desktop\Europ-off\Europ-off\Europ-off\obj\Debug\Europ-off.pdb
+F:\Europ-off\Europ-off\bin\Debug\Europ-off.exe.config
+F:\Europ-off\Europ-off\obj\Debug\Europ-off.exe
+F:\Europ-off\Europ-off\obj\Debug\Europ-off.pdb
+F:\Europ-off\Europ-off\bin\Debug\Europ-off.exe
+F:\Europ-off\Europ-off\bin\Debug\Europ-off.pdb
+F:\Europ-off\Europ-off\obj\Debug\Europ-off.csprojResolveAssemblyReference.cache
+F:\Europ-off\Europ-off\obj\Debug\Europ_off.Form1.resources
+F:\Europ-off\Europ-off\obj\Debug\Europ_off.Properties.Resources.resources
+F:\Europ-off\Europ-off\obj\Debug\Europ-off.csproj.GenerateResource.Cache
