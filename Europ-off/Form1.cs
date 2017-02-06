@@ -15,17 +15,12 @@ namespace Europ_off
     {
         List<Province> provinceList = new List<Province>( );
         List<Coordinate> coordHolder = new List<Coordinate>( );
-        FileReader fileReader = new FileReader( );
+        FileReader saveReader;
         Pen pen = new Pen( Color.Black );      
 
         public Form1( )
         {
             InitializeComponent( );
-        }
-
-        private void Form1_Load( object sender, EventArgs e )
-        {
-            provinceList = fileReader.GetProvinceCodes( );
         }
 
         private void GamePanel_Paint( object sender, PaintEventArgs e )
@@ -55,6 +50,26 @@ namespace Europ_off
         private void paintLine( Coordinate start , Coordinate end , Graphics g)
         {
             g.DrawLine( pen , start.x , start.y , end.x , end.y );
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void newMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Create empty map file
+        }
+
+        private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Lets the user open a save file (only files with ems extension)
+            openFileDialog1.ShowDialog();
+            if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                saveReader = new FileReader(openFileDialog1.FileName);
+            }
         }
     }
 }

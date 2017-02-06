@@ -9,7 +9,7 @@ namespace Europ_off
 {
     class FileReader
     { 
-        StreamReader file = new StreamReader( "C:\\Users\\Jake Yeatman\\Desktop\\Europ-off\\Europ-off\\Europ-off\\ProvinceCodes.txt" );
+        StreamReader _save;
         List<Province> provList = new List<Province>( );
 
         string line;
@@ -19,9 +19,14 @@ namespace Europ_off
         uint _man;
         uint _pro;
 
+        public FileReader(String save)
+        {
+            _save = new StreamReader(save);
+        }
+
         public List<Province> GetProvinceCodes( )
         {
-            while ((line = file.ReadLine( )) != null)
+            while ((line = _save.ReadLine( )) != null)
             {
                 if (line.StartsWith( "ID:" ))
                 {
@@ -48,7 +53,7 @@ namespace Europ_off
                     line.Remove( 0, 5 );
                     _pro = uint.Parse( line );
                 }
-                else if (line == "-----")
+                else
                 {
                     provList.Add( new Province( _coord, _id, _tax, _pro, _man ) );
                 }
@@ -58,12 +63,15 @@ namespace Europ_off
 
         private List<Coordinate> ParseCoordinates(string t )
         {
-            string[ ] coordinates = t.Split( ',' );
             List<Coordinate> x = new List<Coordinate>();
-            for(int i = 0; Math.Ceiling((double)(coordinates.Length / 2)) > i; i++)
+
+            //Splits the input line and parses each cooridnate
+            string[] coordinates = t.Split( ',' );
+            foreach(string coordinate in coordinates)
             {
-                x.Add( ParseCoordinate( coordinates[i * 2 - 1] ) );
+                x.Add(ParseCoordinate(coordinate));
             }
+
             return x;
         }
 
