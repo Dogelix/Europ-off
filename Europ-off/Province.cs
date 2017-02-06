@@ -31,5 +31,10 @@ namespace Europ_off
             _production = production;
             _manpower = manpower;
         }
+
+        public List<Coordinate> GetCoordinates( )
+        {
+            return _coordinates;
+        }
     }
 }

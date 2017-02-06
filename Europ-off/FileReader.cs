@@ -9,7 +9,8 @@ namespace Europ_off
 {
     class FileReader
     { 
-        StreamReader file = new StreamReader( "..\\Europ-off\\ProvinceCodes.txt" );
+        StreamReader file = new StreamReader( "C:\\Users\\Jake Yeatman\\Desktop\\Europ-off\\Europ-off\\Europ-off\\ProvinceCodes.txt" );
+        List<Province> provList = new List<Province>( );
 
         string line;
         List<Coordinate> _coord;
@@ -18,7 +19,7 @@ namespace Europ_off
         uint _man;
         uint _pro;
 
-        public void GetProvinceCodes( )
+        public List<Province> GetProvinceCodes( )
         {
             while ((line = file.ReadLine( )) != null)
             {
@@ -29,7 +30,8 @@ namespace Europ_off
                 }
                 else if (line.StartsWith( "Sha:" ))
                 {
-
+                    line.Remove( 0, 5 );
+                    _coord =  ParseCoordinates( line );
                 }
                 else if (line.StartsWith( "Tax:" ))
                 {
@@ -48,9 +50,29 @@ namespace Europ_off
                 }
                 else if (line == "-----")
                 {
-                    provinceList.Add( new Province( _coord, _id, _tax, _pro, _man ) );
+                    provList.Add( new Province( _coord, _id, _tax, _pro, _man ) );
                 }
             }
+            return provList;
+        }
+
+        private List<Coordinate> ParseCoordinates(string t )
+        {
+            string[ ] coordinates = t.Split( ',' );
+            List<Coordinate> x = new List<Coordinate>();
+            for(int i = 0; Math.Ceiling((double)(coordinates.Length / 2)) > i; i++)
+            {
+                x.Add( ParseCoordinate( coordinates[i * 2 - 1] ) );
+            }
+            return x;
+        }
+
+        private Coordinate ParseCoordinate(string line)
+        {
+            Coordinate c = new Coordinate( );
+            c.x = uint.Parse( line.Split( ',' )[0].Substring(1));
+            c.y = uint.Parse( line.Split( ',' )[1].Substring( 0, line.Length - 1));
+            return c;
         }
     }
 }
