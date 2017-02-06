@@ -10,14 +10,6 @@ namespace Europ_off
     class FileReader
     { 
         StreamReader _save;
-        List<Province> provList = new List<Province>( );
-
-        string line;
-        List<Coordinate> _coord;
-        uint _id;
-        uint _tax;
-        uint _man;
-        uint _pro;
 
         public FileReader(String save)
         {
@@ -26,41 +18,35 @@ namespace Europ_off
 
         public List<Province> GetProvinceCodes( )
         {
-            while ((line = _save.ReadLine( )) != null)
+            List<Province> _list = new List<Province>();
+            uint numberOfProviences = uint.Parse(_save.ReadLine());
+            for (int i = 0; i < numberOfProviences; i++)
             {
-                if (line.StartsWith( "ID:" ))
-                {
-                    line.Remove( 0, 4 );
-                    _id = uint.Parse( line );
-                }
-                else if (line.StartsWith( "Sha:" ))
-                {
-                    line.Remove( 0, 5 );
-                    _coord =  ParseCoordinates( line );
-                }
-                else if (line.StartsWith( "Tax:" ))
-                {
-                    line.Remove( 0, 5 );
-                    _tax = uint.Parse( line );
-                }
-                else if (line.StartsWith( "Man:" ))
-                {
-                    line.Remove( 0, 5 );
-                    _man = uint.Parse( line );
-                }
-                else if (line.StartsWith( "Pro:" ))
-                {
-                    line.Remove( 0, 5 );
-                    _pro = uint.Parse( line );
-                }
-                else
-                {
-                    provList.Add( new Province( _coord, _id, _tax, _pro, _man ) );
-                }
+                _list.Add(getProvience());
             }
-            return provList;
+            return _list;
         }
 
+        private Province getProvience()
+        {
+            uint _id = 0;
+            uint _tax = 0;
+            uint _manpower = 0;
+            uint _production = 0;
+            List<Coordinate> _coordinates = new List<Coordinate>();
+
+            for (int i = 0; i <= 5; i++)
+            {
+                _id = uint.Parse(_save.ReadLine().Remove(0, 4));
+                _tax = uint.Parse(_save.ReadLine().Remove(0, 5));
+                _manpower = uint.Parse(_save.ReadLine().Remove(0, 5));
+                _production = uint.Parse(_save.ReadLine().Remove(0, 5));
+                _coordinates = ParseCoordinates((_save.ReadLine().Remove(0, 5)));
+            }
+
+            Province _provience = new Province(_coordinates,_id, _tax, _production, _manpower);
+            return _provience;
+        }
         private List<Coordinate> ParseCoordinates(string t )
         {
             List<Coordinate> x = new List<Coordinate>();

@@ -65,7 +65,6 @@ namespace Europ_off
         private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Lets the user open a save file (only files with ems extension)
-            openFileDialog1.ShowDialog();
             if(openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 saveReader = new FileReader(openFileDialog1.FileName);
