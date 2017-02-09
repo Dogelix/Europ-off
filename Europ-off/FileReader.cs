@@ -55,6 +55,7 @@ namespace Europ_off
             Province _provience = new Province(_coordinates,_id, _tax, _production, _manpower);
             return _provience;
         }
+
         private List<Coordinate> ParseCoordinates(string t )
         {
             List<Coordinate> x = new List<Coordinate>();

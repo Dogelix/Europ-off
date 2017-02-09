@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Europ-offResources.cs" />
     <Compile Include="FileReader.cs" />
+    <Compile Include="FileWriter.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
