@@ -36,10 +36,72 @@ namespace Europ_off
         }
     }
 
-    public struct DevelopmentStatistics
-    {
-        uint _tax;
+    public struct ArmyStats
+    {        
+        double _upkeep;
         uint _manpower;
-        uint _production;
+        double _supply;
+        double _firepower;
+        double _defense;
+
+        public double upkeep
+        {
+            get
+            {
+                return _upkeep;
+            }
+            set
+            {
+                _upkeep = value;
+            }
+        }
+
+        public uint manpower
+        {
+            get
+            {
+                return _manpower;
+            }
+            set
+            {
+                _manpower = value;
+            }
+        }
+
+        public double supply
+        {
+            get
+            {
+                return _supply;
+            }
+            set
+            {
+                _supply = value;
+            }
+        }
+
+        public double firepower
+        {
+            get
+            {
+                return _firepower;
+            }
+            set
+            {
+                _firepower = value;
+            }
+        }
+
+        public double defense
+        {
+            get
+            {
+                return _defense;
+            }
+            set
+            {
+                _defense = value;
+            }
+        }
     }
 }

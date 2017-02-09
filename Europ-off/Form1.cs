@@ -64,7 +64,7 @@ namespace Europ_off
             {
                 newFile.WriteFile( saveFileDialog1.FileName );
             }
-            newFile.PopulateNewFile( );
+            newFile.PopulateNewFile( provinceList );
         }
 
         private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)

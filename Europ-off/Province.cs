@@ -36,5 +36,25 @@ namespace Europ_off
         {
             return _coordinates;
         }
+
+        public uint GetID( )
+        {
+            return _id;
+        }
+
+        public uint GetTax( )
+        {
+            return _tax;
+        }
+
+        public uint GetProduction( )
+        {
+            return _production;
+        }
+
+        public uint GetManpower( )
+        {
+            return _manpower;
+        }
     }
 }
