@@ -9,69 +9,73 @@ namespace Europ_off
 {
     class FileReader
     { 
-        StreamReader file = new StreamReader( "C:\\Users\\Jake Yeatman\\Desktop\\Europ-off\\Europ-off\\Europ-off\\ProvinceCodes.txt" );
-        List<Province> provList = new List<Province>( );
+        StreamReader _save;
+        List<Province> _proviences;
 
-        string line;
-        List<Coordinate> _coord;
-        uint _id;
-        uint _tax;
-        uint _man;
-        uint _pro;
-
-        public List<Province> GetProvinceCodes( )
+        public FileReader(String save)
         {
-            while ((line = file.ReadLine( )) != null)
-            {
-                if (line.StartsWith( "ID:" ))
-                {
-                    line.Remove( 0, 4 );
-                    _id = uint.Parse( line );
-                }
-                else if (line.StartsWith( "Sha:" ))
-                {
-                    line.Remove( 0, 5 );
-                    _coord =  ParseCoordinates( line );
-                }
-                else if (line.StartsWith( "Tax:" ))
-                {
-                    line.Remove( 0, 5 );
-                    _tax = uint.Parse( line );
-                }
-                else if (line.StartsWith( "Man:" ))
-                {
-                    line.Remove( 0, 5 );
-                    _man = uint.Parse( line );
-                }
-                else if (line.StartsWith( "Pro:" ))
-                {
-                    line.Remove( 0, 5 );
-                    _pro = uint.Parse( line );
-                }
-                else if (line == "-----")
-                {
-                    provList.Add( new Province( _coord, _id, _tax, _pro, _man ) );
-                }
-            }
-            return provList;
+            _save = new StreamReader(save);
+            _proviences = ReadProvinceCodes();
+            _save.Close();
         }
 
+        public List<Province> Proviences
+        {
+            get
+            {
+                return _proviences;
+            }
+        }
+
+        private List<Province> ReadProvinceCodes( )
+        {
+            List<Province> _list = new List<Province>();
+            uint numberOfProviences = uint.Parse(_save.ReadLine());
+            for (int i = 0; i < numberOfProviences; i++)
+            {
+                _list.Add(getProvience());
+            }
+            return _list;
+        }
+
+        private Province getProvience()
+        {
+            uint _id = 0;
+            uint _tax = 0;
+            uint _manpower = 0;
+            uint _production = 0;
+            List<Coordinate> _coordinates = new List<Coordinate>();
+
+            _id = uint.Parse(_save.ReadLine().Remove(0, 4));
+            _tax = uint.Parse(_save.ReadLine().Remove(0, 5));
+            _manpower = uint.Parse(_save.ReadLine().Remove(0, 5));
+            _production = uint.Parse(_save.ReadLine().Remove(0, 5));
+            _coordinates = ParseCoordinates((_save.ReadLine().Remove(0, 5)));
+
+            Province _provience = new Province(_coordinates,_id, _tax, _production, _manpower);
+            return _provience;
+        }
         private List<Coordinate> ParseCoordinates(string t )
         {
-            string[ ] coordinates = t.Split( ',' );
             List<Coordinate> x = new List<Coordinate>();
-            for(int i = 0; Math.Ceiling((double)(coordinates.Length / 2)) > i; i++)
+
+            //Splits the input line and parses each cooridnate
+            string[] coordinates = t.Split( '-' );
+            foreach(string coordinate in coordinates)
             {
-                x.Add( ParseCoordinate( coordinates[i * 2 - 1] ) );
+                x.Add(ParseCoordinate(coordinate));
             }
+
             return x;
         }
 
         private Coordinate ParseCoordinate(string line)
         {
             Coordinate c = new Coordinate( );
-            c.x = uint.Parse( line.Split( ',' )[0].Substring(1));
-            c.y = uint.Parse( line.Split( ',' )[1].Substring( 0, line.Length - 1));
+            string[] parameters = line.Substring(1, line.Length - 2).Split(',');
+
+            c.x = uint.Parse( parameters[0]);
+            c.y = uint.Parse( parameters[1]);
             return c;
         }
     }

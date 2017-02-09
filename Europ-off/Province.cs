@@ -10,7 +10,7 @@ namespace Europ_off
     class Province
     {
         List<Coordinate> _coordinates;
-        uint _id = 1;
+        uint _id;
 
         //Development Statistics
         uint _tax = 1;
