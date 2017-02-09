@@ -43,7 +43,21 @@ namespace Europ_off
 
         private void AddProvince( StreamWriter file, Province provience)
         {
-            file.WriteLine("" + provience.ss);
+            file.WriteLine("ID: " + provience.ID);
+            file.WriteLine("Tax: " + provience.Tax );
+            file.WriteLine("Man: " + provience.Manpower);
+            file.WriteLine("Pro: " + provience.Production );
+            file.WriteLine("Sha: ")
+        }
+
+        private string FormatShapeData(List<Coordinate> points)
+        {
+            string _s;
+            foreach(Coordinate coord in points)
+            {
+
+            }
+            return "";
         }
     }
 }

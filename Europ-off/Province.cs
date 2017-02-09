@@ -32,29 +32,56 @@ namespace Europ_off
             _manpower = manpower;
         }
 
-        public List<Coordinate> GetCoordinates( )
+        public List<Coordinate> GetCoordinates
         {
-            return _coordinates;
+            get
+            {
+                return _coordinates;
+            }
         }
 
-        public uint GetID( )
+        public uint ID
         {
-            return _id;
+            get
+            {
+                return _id;
+            }
         }
 
-        public uint GetTax( )
+        public uint Tax
         {
-            return _tax;
+            get
+            {
+                return _tax;
+            }
+            set
+            {
+                _tax = value;
+            }
         }
 
-        public uint GetProduction( )
+        public uint Production
         {
-            return _production;
+            get
+            {
+                return _production;
+            }
+            set
+            {
+                _production = value;
+            }
         }
 
-        public uint GetManpower( )
+        public uint Manpower
         {
-            return _manpower;
+            get
+            {
+                return _manpower;
+            }
+            set
+            {
+                _manpower = value;
+            }
         }
     }
 }
