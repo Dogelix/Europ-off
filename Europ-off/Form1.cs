@@ -16,7 +16,7 @@ namespace Europ_off
         List<Province> provinceList;
         List<Coordinate> coordinates;
         FileReader saveReader;
-        FileWriter writeFile;
+        FileWriter newFile = new FileWriter();
         Pen pen = new Pen( Color.Black );      
 
         public Form1( )
@@ -62,8 +62,9 @@ namespace Europ_off
             //Create empty map file
             if(saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                writeFile.WriteFile( saveFileDialog1.FileName );
+                newFile.WriteFile( saveFileDialog1.FileName );
             }
+            newFile.PopulateNewFile( );
         }
 
         private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)

@@ -9,7 +9,7 @@ namespace Europ_off
 {
     class FileWriter
     {
-        StreamWriter streamWriter;
+        StreamWriter file;
         
         private uint _numberOfProvinces = 0;
         private string _filePath;
@@ -18,14 +18,22 @@ namespace Europ_off
         {
             _filePath = filename;
             File.Create( filename );
+        }
 
-            File.AppendText( _filePath );
+        public void PopulateNewFile( )
+        {
+            file = new StreamWriter( _filePath );
+
+            file.WriteLine( NumberOfProvinces( ) );
+
+            file.Close( );
         }
         
-        private uint NumberOfProvinces( string filename)
+        private uint NumberOfProvinces( )
         {
             return _numberOfProvinces;
         }
+
         private void AddProvince( string filename )
         {
 
