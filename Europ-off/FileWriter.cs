@@ -20,11 +20,18 @@ namespace Europ_off
             File.Create( filename );
         }
 
-        public void PopulateNewFile( )
+        public void PopulateNewFile( List<Province> provinces )
         {
             file = new StreamWriter( _filePath );
 
-            file.WriteLine( NumberOfProvinces( ) );
+            file.WriteLine( "Error: Incomplete file save" );
+
+            foreach(Province provience in provinces)
+            {
+                AddProvince( file, provience );
+            }
+
+
 
             file.Close( );
         }
@@ -34,9 +41,9 @@ namespace Europ_off
             return _numberOfProvinces;
         }
 
-        private void AddProvince( string filename )
+        private void AddProvince( StreamWriter file, Province provience)
         {
-
+            file.WriteLine("" + provience.ss);
         }
     }
 }
