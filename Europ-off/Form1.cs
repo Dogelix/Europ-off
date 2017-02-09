@@ -16,6 +16,7 @@ namespace Europ_off
         List<Province> provinceList;
         List<Coordinate> coordinates;
         FileReader saveReader;
+        FileWriter writeFile;
         Pen pen = new Pen( Color.Black );      
 
         public Form1( )
@@ -59,6 +60,10 @@ namespace Europ_off
         private void newMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Create empty map file
+            if(saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                writeFile.WriteFile( saveFileDialog1.FileName );
+            }
         }
 
         private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
