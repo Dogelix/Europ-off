@@ -13,11 +13,10 @@ namespace Europ_off
 {
     public partial class Form1 : Form
     {
-        List<Province> provinceList;
-        List<Coordinate> coordinates;
+        List<Province> proviences = new List<Province>();
         FileReader saveReader;
         FileWriter newFile = new FileWriter();
-        Pen pen = new Pen( Color.Black );      
+        RenderProvience provienceRenderer = new RenderProvience(); 
 
         public Form1( )
         {
@@ -27,31 +26,12 @@ namespace Europ_off
         private void GamePanel_Paint( object sender, PaintEventArgs e )
         {
             Graphics g = e.Graphics;
-            DrawProvinces( g );
-        }
-
-        private void DrawProvinces( Graphics g )
-        {
-            if(provinceList != null)
+            foreach(Province provience in proviences)
             {
-                foreach (Province provience in provinceList)
-                {
-                    coordinates = provience.GetCoordinates();
-                    for(int i = 0; i + 1 < coordinates.Count; i++)
-                    {
-                        paintLine(coordinates[i], coordinates[i + 1], g);
-                    }
-                    //Draws the final connecting line
-                    paintLine(coordinates.First(), coordinates.Last(), g);
-                }
+                provienceRenderer.renderShape(provience, g, Color.LightBlue);
             }
         }
-
-        private void paintLine( Coordinate start , Coordinate end , Graphics g)
-        {
-            g.DrawLine( pen , start.x , start.y , end.x , end.y );
-        }
-
+        
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -64,7 +44,7 @@ namespace Europ_off
             {
                 newFile.WriteFile( saveFileDialog1.FileName );
             }
-            newFile.PopulateNewFile( provinceList );
+            newFile.PopulateNewFile( proviences );
         }
 
         private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -73,7 +53,7 @@ namespace Europ_off
             if(openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 saveReader = new FileReader(openFileDialog1.FileName);
-                provinceList = saveReader.Proviences;
+                proviences = saveReader.Proviences;
                 GamePanel.Invalidate();
             }
         }

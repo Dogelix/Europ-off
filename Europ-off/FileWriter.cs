@@ -47,7 +47,7 @@ namespace Europ_off
             file.WriteLine("Tax: " + provience.Tax );
             file.WriteLine("Man: " + provience.Manpower);
             file.WriteLine("Pro: " + provience.Production );
-            file.WriteLine("Sha: ")
+            file.WriteLine("Sha: ");
         }
 
         private string FormatShapeData(List<Coordinate> points)
