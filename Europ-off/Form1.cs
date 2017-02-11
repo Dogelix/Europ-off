@@ -42,7 +42,7 @@ namespace Europ_off
             //Create empty map file
             if(saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                newFile.WriteFile( saveFileDialog1.FileName );
+                newFile.SaveFile( saveFileDialog1.FileName );
             }
             newFile.PopulateNewFile( proviences );
         }
