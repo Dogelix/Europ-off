@@ -11,6 +11,7 @@ namespace Europ_off
     {
         List<Coordinate> _coordinates;
         uint _id;
+        string _name = "N/A";
 
         //Development Statistics
         uint _tax = 1;
@@ -45,6 +46,18 @@ namespace Europ_off
             get
             {
                 return _id;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
             }
         }
 

@@ -13,10 +13,10 @@ namespace Europ_off
 {
     public partial class Form1 : Form
     {
-        List<Province> proviences = new List<Province>();
+        List<Province> provinces = new List<Province>();
         FileReader saveReader;
         FileWriter newFile = new FileWriter();
-        RenderProvience provienceRenderer = new RenderProvience(); 
+        RenderProvince provinceRenderer = new RenderProvince(); 
 
         public Form1( )
         {
@@ -26,9 +26,9 @@ namespace Europ_off
         private void GamePanel_Paint( object sender, PaintEventArgs e )
         {
             Graphics g = e.Graphics;
-            foreach(Province provience in proviences)
+            foreach(Province province in provinces)
             {
-                provienceRenderer.renderShape(provience, g, Color.LightBlue);
+                provinceRenderer.renderShape(province, g, Color.LightBlue);
             }
         }
         
@@ -44,7 +44,7 @@ namespace Europ_off
             {
                 newFile.SaveFile( saveFileDialog1.FileName );
             }
-            newFile.PopulateNewFile( proviences );
+            newFile.PopulateNewFile( provinces );
         }
 
         private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -53,9 +53,46 @@ namespace Europ_off
             if(openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 saveReader = new FileReader(openFileDialog1.FileName);
-                proviences = saveReader.Proviences;
+                provinces = saveReader.Provinces;
+                ProvinceEditorListUpdate();
                 GamePanel.Invalidate();
             }
+        }
+
+        private void provinceEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProvinceEditorPanel.Visible = true;
+            ProvinceEditorListUpdate();
+        }
+
+        private void ProvinceEditorListUpdate()
+        {
+            foreach (Province province in provinces)
+            {
+                ProvinceList.Items.Add(province.ID);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ProvinceEditorPanel.Visible = false;
+        }
+
+        private void ProvinceColorPicker_Click(object sender, EventArgs e)
+        {
+            if(colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ProvinceColorPicker.BackColor = colorDialog1.Color;
+            }
+        }
+
+        private void ProvinceList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ProvinceNameTextbox.Text = provinces[ProvinceList.SelectedIndex].Name.ToString();
+            ProvinceIDTextbox.Text = provinces[ProvinceList.SelectedIndex].ID.ToString();
+            ProvinceTaxTextbox.Text = provinces[ProvinceList.SelectedIndex].Tax.ToString();
+            ProvinceProductionTextbox.Text = provinces[ProvinceList.SelectedIndex].Production.ToString();
+            ProvinceManpowerTextbox.Text = provinces[ProvinceList.SelectedIndex].Manpower.ToString();
         }
     }
 }

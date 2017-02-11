@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Europ_off
 {
-    class RenderProvience
+    class RenderProvince
     {
         public void renderShape(Province provience, Graphics renderSpace, Color color)
         {
