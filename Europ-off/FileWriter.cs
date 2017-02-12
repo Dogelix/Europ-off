@@ -14,24 +14,23 @@ namespace Europ_off
         private uint _numberOfProvinces = 0;
         private string _filePath;
 
-        public void WriteFile( string filename )
+        public void SaveFile( string filename )
         {
             _filePath = filename;
-            File.Create( filename );
+            FileStream w = File.Create( filename );
+            w.Dispose();
         }
 
         public void PopulateNewFile( List<Province> provinces )
         {
             file = new StreamWriter( _filePath );
 
-            file.WriteLine( "Error: Incomplete file save" );
+            file.WriteLine( provinces.Count());
 
             foreach(Province provience in provinces)
             {
                 AddProvince( file, provience );
             }
-
-
 
             file.Close( );
         }
@@ -47,17 +46,18 @@ namespace Europ_off
             file.WriteLine("Tax: " + provience.Tax );
             file.WriteLine("Man: " + provience.Manpower);
             file.WriteLine("Pro: " + provience.Production );
-            file.WriteLine("Sha: ")
+            file.WriteLine("Sha: " + FormatShapeData(provience.GetCoordinates));
         }
 
         private string FormatShapeData(List<Coordinate> points)
         {
-            string _s;
-            foreach(Coordinate coord in points)
+            string _s = "";
+            for(int i = 0; i < points.Count(); i++)
             {
-
+                _s += string.Format("({0},{1})-", points[i].x, points[i].y);
             }
-            return "";
+            _s = _s.Substring(0, _s.Length - 1);
+            return _s;
         }
     }
 }
