@@ -55,6 +55,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.ResetProvinceButton = new System.Windows.Forms.Button();
             this.GamePanel.SuspendLayout();
             this.ProvinceEditorPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -70,6 +71,7 @@
             this.GamePanel.Name = "GamePanel";
             this.GamePanel.Size = new System.Drawing.Size(992, 552);
             this.GamePanel.TabIndex = 0;
+            this.GamePanel.Click += new System.EventHandler(this.PanelClick);
             this.GamePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.GamePanel_Paint);
             // 
             // ProvinceEditorPanel
@@ -77,6 +79,7 @@
             this.ProvinceEditorPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ProvinceEditorPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ProvinceEditorPanel.Controls.Add(this.ResetProvinceButton);
             this.ProvinceEditorPanel.Controls.Add(this.ProvinceList);
             this.ProvinceEditorPanel.Controls.Add(this.ProvinceManpowerTextbox);
             this.ProvinceEditorPanel.Controls.Add(this.ProvinceProductionTextbox);
@@ -103,7 +106,7 @@
             this.ProvinceList.FormattingEnabled = true;
             this.ProvinceList.Location = new System.Drawing.Point(17, 158);
             this.ProvinceList.Name = "ProvinceList";
-            this.ProvinceList.Size = new System.Drawing.Size(176, 316);
+            this.ProvinceList.Size = new System.Drawing.Size(176, 290);
             this.ProvinceList.TabIndex = 14;
             this.ProvinceList.SelectedIndexChanged += new System.EventHandler(this.ProvinceList_SelectedIndexChanged);
             // 
@@ -307,6 +310,16 @@
             this.saveFileDialog1.DefaultExt = "txt";
             this.saveFileDialog1.Filter = "Europa Map Save (*.ems)| *.ems";
             // 
+            // ResetProvinceButton
+            // 
+            this.ResetProvinceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ResetProvinceButton.Location = new System.Drawing.Point(7, 460);
+            this.ResetProvinceButton.Name = "ResetProvinceButton";
+            this.ResetProvinceButton.Size = new System.Drawing.Size(186, 23);
+            this.ResetProvinceButton.TabIndex = 15;
+            this.ResetProvinceButton.Text = "Reset Province";
+            this.ResetProvinceButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -356,6 +369,7 @@
         private System.Windows.Forms.TextBox ProvinceTaxTextbox;
         private System.Windows.Forms.TextBox ProvinceIDTextbox;
         private System.Windows.Forms.ListBox ProvinceList;
+        private System.Windows.Forms.Button ResetProvinceButton;
     }
 }
 

@@ -4,25 +4,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace Europ_off
 {
     class RenderProvince
     {
-        public void renderShape(Province provience, Graphics renderSpace, Color color)
+        public Region renderShape(Province province, Graphics renderSpace, Color color)
         {
-            PointF[] points = new PointF[provience.GetCoordinates.Count];
+            PointF[] points = CoordToPointFArray(province);
             Pen pen = new Pen(Color.Black);
             Brush brush = new SolidBrush(color);
-            for(int i = 0; i < provience.GetCoordinates.Count; i++ )
+            GraphicsPath gp = new GraphicsPath();
+
+            gp.AddPolygon(points);
+            Region region = new Region(gp);
+
+            renderSpace.DrawPath(pen, gp);
+            renderSpace.SetClip(region, CombineMode.Replace);
+            
+            renderSpace.FillPolygon(brush, points);
+
+            return region;
+        }
+
+        public PointF[] CoordToPointFArray(Province province)
+        {
+            PointF[] points = new PointF[province.GetCoordinates.Count];
+            for (int i = 0; i < province.GetCoordinates.Count; i++)
             {
                 PointF point = new PointF();
-                point.X = provience.GetCoordinates[i].x;
-                point.Y = provience.GetCoordinates[i].y;
+                point.X = province.GetCoordinates[i].x;
+                point.Y = province.GetCoordinates[i].y;
                 points[i] = point;
             }
-            renderSpace.DrawPolygon(pen, points);
-            renderSpace.FillPolygon(brush, points);
+            return points;
         }
     }
 }

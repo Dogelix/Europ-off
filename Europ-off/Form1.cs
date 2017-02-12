@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace Europ_off
 {
@@ -16,7 +17,8 @@ namespace Europ_off
         List<Province> provinces = new List<Province>();
         FileReader saveReader;
         FileWriter newFile = new FileWriter();
-        RenderProvince provinceRenderer = new RenderProvince(); 
+        RenderProvince provinceRenderer = new RenderProvince();
+        List<Region> provinceRegions = new List<Region>();
 
         public Form1( )
         {
@@ -26,9 +28,10 @@ namespace Europ_off
         private void GamePanel_Paint( object sender, PaintEventArgs e )
         {
             Graphics g = e.Graphics;
+            provinceRegions = new List<Region>();
             foreach(Province province in provinces)
             {
-                provinceRenderer.renderShape(province, g, Color.LightBlue);
+                provinceRegions.Add(provinceRenderer.renderShape(province, g, Color.LightBlue));
             }
         }
         
@@ -67,6 +70,7 @@ namespace Europ_off
 
         private void ProvinceEditorListUpdate()
         {
+            ProvinceList.Items.Clear();
             foreach (Province province in provinces)
             {
                 ProvinceList.Items.Add(province.ID);
@@ -88,11 +92,40 @@ namespace Europ_off
 
         private void ProvinceList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ProvinceNameTextbox.Text = provinces[ProvinceList.SelectedIndex].Name.ToString();
-            ProvinceIDTextbox.Text = provinces[ProvinceList.SelectedIndex].ID.ToString();
-            ProvinceTaxTextbox.Text = provinces[ProvinceList.SelectedIndex].Tax.ToString();
-            ProvinceProductionTextbox.Text = provinces[ProvinceList.SelectedIndex].Production.ToString();
-            ProvinceManpowerTextbox.Text = provinces[ProvinceList.SelectedIndex].Manpower.ToString();
+            ProvinceEditorUpdate(ProvinceList.SelectedIndex);
+        }
+
+        private void PanelClick(object sender, EventArgs e)
+        {
+            //Checks Hitboxes backwards as the hitboxes overlap and this will find the latest hitbox at a location
+            int i = provinceRegions.Count - 1;
+            bool hit = false;
+            var mouseEventArgs = e as MouseEventArgs;
+            while(i >= 0 && hit == false)
+            {
+                if (provinceRegions[i].IsVisible(mouseEventArgs.X, mouseEventArgs.Y))
+                {
+                    ProvinceEditorUpdate(i);
+                    hit = true;
+                }
+                i--;
+            }
+        }
+
+        private void ProvinceEditorUpdate(int i)
+        {
+            //Fills text fields
+            ProvinceNameTextbox.Text = provinces[i].Name.ToString();
+            ProvinceIDTextbox.Text = provinces[i].ID.ToString();
+            ProvinceTaxTextbox.Text = provinces[i].Tax.ToString();
+            ProvinceProductionTextbox.Text = provinces[i].Production.ToString();
+            ProvinceManpowerTextbox.Text = provinces[i].Manpower.ToString();
+
+            //Updates list selection
+            ProvinceList.SelectedIndex = i;
+
+            //Updates color picker
+            ProvinceColorPicker.BackColor = provinces[i].Color;
         }
     }
 }
