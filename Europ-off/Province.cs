@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Europ_off
 { 
@@ -11,6 +12,9 @@ namespace Europ_off
     {
         List<Coordinate> _coordinates;
         uint _id;
+        string _name = "N/A";
+        Color _color = Color.Purple;
+        
 
         //Development Statistics
         uint _tax = 1;
@@ -48,6 +52,18 @@ namespace Europ_off
             }
         }
 
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+
         public uint Tax
         {
             get
@@ -81,6 +97,18 @@ namespace Europ_off
             set
             {
                 _manpower = value;
+            }
+        }
+
+        public Color Color
+        {
+            get
+            {
+                return _color;
+            }
+            set
+            {
+                _color = value;
             }
         }
     }

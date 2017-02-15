@@ -8,16 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace Europ_off
 {
     public partial class Form1 : Form
     {
-        List<Province> provinceList;
-        List<Coordinate> coordinates;
+        List<Province> provinces = new List<Province>();
         FileReader saveReader;
         FileWriter newFile = new FileWriter();
-        Pen pen = new Pen( Color.Black );      
+        RenderProvince provinceRenderer = new RenderProvince();
+        List<Region> provinceRegions = new List<Region>();
 
         public Form1( )
         {
@@ -27,31 +28,13 @@ namespace Europ_off
         private void GamePanel_Paint( object sender, PaintEventArgs e )
         {
             Graphics g = e.Graphics;
-            DrawProvinces( g );
-        }
-
-        private void DrawProvinces( Graphics g )
-        {
-            if(provinceList != null)
+            provinceRegions = new List<Region>();
+            foreach(Province province in provinces)
             {
-                foreach (Province provience in provinceList)
-                {
-                    coordinates = provience.GetCoordinates();
-                    for(int i = 0; i + 1 < coordinates.Count; i++)
-                    {
-                        paintLine(coordinates[i], coordinates[i + 1], g);
-                    }
-                    //Draws the final connecting line
-                    paintLine(coordinates.First(), coordinates.Last(), g);
-                }
+                provinceRegions.Add(provinceRenderer.renderShape(province, g, Color.LightBlue));
             }
         }
-
-        private void paintLine( Coordinate start , Coordinate end , Graphics g)
-        {
-            g.DrawLine( pen , start.x , start.y , end.x , end.y );
-        }
-
+        
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -62,9 +45,9 @@ namespace Europ_off
             //Create empty map file
             if(saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                newFile.WriteFile( saveFileDialog1.FileName );
+                newFile.SaveFile( saveFileDialog1.FileName );
             }
-            newFile.PopulateNewFile( provinceList );
+            newFile.PopulateNewFile( provinces );
         }
 
         private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -73,9 +56,76 @@ namespace Europ_off
             if(openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 saveReader = new FileReader(openFileDialog1.FileName);
-                provinceList = saveReader.Proviences;
+                provinces = saveReader.Provinces;
+                ProvinceEditorListUpdate();
                 GamePanel.Invalidate();
             }
+        }
+
+        private void provinceEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProvinceEditorPanel.Visible = true;
+            ProvinceEditorListUpdate();
+        }
+
+        private void ProvinceEditorListUpdate()
+        {
+            ProvinceList.Items.Clear();
+            foreach (Province province in provinces)
+            {
+                ProvinceList.Items.Add(province.ID);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ProvinceEditorPanel.Visible = false;
+        }
+
+        private void ProvinceColorPicker_Click(object sender, EventArgs e)
+        {
+            if(colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ProvinceColorPicker.BackColor = colorDialog1.Color;
+            }
+        }
+
+        private void ProvinceList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ProvinceEditorUpdate(ProvinceList.SelectedIndex);
+        }
+
+        private void PanelClick(object sender, EventArgs e)
+        {
+            //Checks Hitboxes backwards as the hitboxes overlap and this will find the latest hitbox at a location
+            int i = provinceRegions.Count - 1;
+            bool hit = false;
+            var mouseEventArgs = e as MouseEventArgs;
+            while(i >= 0 && hit == false)
+            {
+                if (provinceRegions[i].IsVisible(mouseEventArgs.X, mouseEventArgs.Y))
+                {
+                    ProvinceEditorUpdate(i);
+                    hit = true;
+                }
+                i--;
+            }
+        }
+
+        private void ProvinceEditorUpdate(int i)
+        {
+            //Fills text fields
+            ProvinceNameTextbox.Text = provinces[i].Name.ToString();
+            ProvinceIDTextbox.Text = provinces[i].ID.ToString();
+            ProvinceTaxTextbox.Text = provinces[i].Tax.ToString();
+            ProvinceProductionTextbox.Text = provinces[i].Production.ToString();
+            ProvinceManpowerTextbox.Text = provinces[i].Manpower.ToString();
+
+            //Updates list selection
+            ProvinceList.SelectedIndex = i;
+
+            //Updates color picker
+            ProvinceColorPicker.BackColor = provinces[i].Color;
         }
     }
 }

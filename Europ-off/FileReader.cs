@@ -19,7 +19,7 @@ namespace Europ_off
             _save.Close();
         }
 
-        public List<Province> Proviences
+        public List<Province> Provinces
         {
             get
             {
